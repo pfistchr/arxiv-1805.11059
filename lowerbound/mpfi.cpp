@@ -101,9 +101,9 @@ void Verifier::verify(const qxybounds_t &qxybounds, const line_t &line)
 
     mpfi_si_sub(oneminusalpha, 1, alpha);
 
-    // determine corner points
+    // determine extreme points
 
-    std::set<std::array<int32_t, 3>> qxcornerpoints;
+    std::set<std::array<int32_t, 3>> qxextremepoints;
 
     for (const std::array<uint8_t, 3> &permutation : permutations) {
         const int32_t qxlower = qxybounds.lower.at(permutation.at(0));
@@ -117,10 +117,10 @@ void Verifier::verify(const qxybounds_t &qxybounds, const line_t &line)
         qx.at(permutation.at(0)) = qxlower;
         qx.at(permutation.at(1)) = qxupper;
         qx.at(permutation.at(2)) = qxother;
-        qxcornerpoints.insert(qx);
+        qxextremepoints.insert(qx);
     }
 
-    std::set<std::array<int32_t, 3>> qycornerpoints;
+    std::set<std::array<int32_t, 3>> qyextremepoints;
 
     for (const std::array<uint8_t, 3> &permutation : permutations) {
         const int32_t qylower = qxybounds.lower.at(3 + permutation.at(0));
@@ -134,17 +134,17 @@ void Verifier::verify(const qxybounds_t &qxybounds, const line_t &line)
         qy.at(permutation.at(0)) = qylower;
         qy.at(permutation.at(1)) = qyupper;
         qy.at(permutation.at(2)) = qyother;
-        qycornerpoints.insert(qy);
+        qyextremepoints.insert(qy);
     }
 
-    // compute D = \min_j \sum_{x,y} Q_j(x,y)^{1-\alpha} \beta(x,y)
+    // compute D = qxybetamin = \min_j \sum_{x,y} Q_j(x,y)^{1-\alpha} \beta(x,y)
 
     // [+\infty,+\infty] is not a valid interval
     mpfr_set_inf(&qxybetamin->left, 0);
     mpfr_set_inf(&qxybetamin->right, 0);
 
-    for (const std::array<int32_t, 3> &qx : qxcornerpoints) {
-        for (const std::array<int32_t, 3> &qy : qycornerpoints) {
+    for (const std::array<int32_t, 3> &qx : qxextremepoints) {
+        for (const std::array<int32_t, 3> &qy : qyextremepoints) {
             mpfi_set_si(tmpa, 0);
 
             for (uint x = 0; x < 3; ++x) {
@@ -194,7 +194,7 @@ void Verifier::verify(const qxybounds_t &qxybounds, const line_t &line)
     mpfi_mul(tmpa, tmpa, alpha);
     mpfi_exp(tmpa, tmpa);
 
-    // compute value = -\frac{[\log (... - D) + (1 - \alpha) \cdot rate]}{\alpha}
+    // compute value = -\frac{\log \{[...]^\alpha - D\} + (1 - \alpha) \cdot rate}{\alpha}
 
     mpfi_sub(tmpa, tmpa, qxybetamin);
     mpfi_log(tmpa, tmpa);
@@ -216,6 +216,11 @@ int main()
     stack.push(qxybounds_t{{0, 0, 0, 0, 0, 0}, {fixedpointone, fixedpointone, fixedpointone, fixedpointone, fixedpointone, fixedpointone}});
     std::ifstream infile("input.txt");
     line_t line = {};
+
+    if (!infile) {
+        printf("cannot open input.txt\n");
+        return 1;
+    }
 
     while (!stack.empty()) {
         // get top case from stack

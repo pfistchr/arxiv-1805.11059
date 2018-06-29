@@ -1,10 +1,10 @@
 # Introduction
 
-This is supplementary material for the the paper 'Testing Against Independence and a Rényi Information Measure' ([arXiv:1805.11059](https://arxiv.org/abs/1805.11059)) to verify the numerical results in Example 14.
+This is supplementary material for the paper 'Testing Against Independence and a Rényi Information Measure' ([arXiv:1805.11059](https://arxiv.org/abs/1805.11059)) to verify the numerical results in Example 14.
 
 The following software versions were used (make sure you have the development headers installed when you want to compile code):
 
-* [gcc](https://gcc.gnu.org/) 6.3
+* [GCC](https://gcc.gnu.org/) 6.3
 * [MPFI](http://perso.ens-lyon.fr/nathalie.revol/software.html) 1.5.1
 * [MPFR](https://www.mpfr.org/) 3.1.5
 * [Mathematica](https://www.wolfram.com/mathematica/) 11.2.0
@@ -29,7 +29,7 @@ finish
 ~/arxiv-1805.11059/upperbound$
 ```
 
-The verification is successful if the program shows `finish`.
+The verification is successful if the program outputs `finish`.
 (The expected output is also in the file `mpf.log`.)
 
 ### Verification with MPFR
@@ -47,7 +47,7 @@ finish
 ~/arxiv-1805.11059/upperbound$
 ```
 
-The verification is successful if the program shows `finish`.
+The verification is successful if the program outputs `finish`.
 (The expected output is also in the file `mpf.log`.)
 
 ### Verification with Mathematica
@@ -80,7 +80,7 @@ After the operation, the extreme points (see Remark 17) can easily be identified
 
 ### Preparation
 
-Due to GitHub's file size limitations, you first need to create the input file for the verification methods below:
+Due to GitHub's file size limitations, you first need to create the input file in the `lowerbound` directory:
 
 ```
 ~/arxiv-1805.11059/lowerbound$ cat inputA.txt inputB.txt inputC.txt >input.txt
@@ -102,7 +102,7 @@ finish
 ~/arxiv-1805.11059/lowerbound$
 ```
 
-The verification takes around 30 minutes and is successful if the program shows `finish`.
+The verification takes around 30 minutes and is successful if the program outputs `finish`.
 (The expected output is also in the file `mpf.log`.)
 
 ### Verification with MPFR
@@ -120,7 +120,7 @@ finish
 ~/arxiv-1805.11059/lowerbound$
 ```
 
-The verification takes around 15 minutes and is successful if the program shows `finish`.
+The verification takes around 15 minutes and is successful if the program outputs `finish`.
 (The expected output is also in the file `mpf.log`.)
 
 ### Verification with Mathematica
