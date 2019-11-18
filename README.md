@@ -141,4 +141,4 @@ finish
 ```
 
 The verification takes around 7.2 hours and is successful if all values are `True`, i.e., if the output is identical to the content of the file `mathematica.log`.
-Note that, due to a bug in in earlier versions of Mathematica (CASE:4034970), Mathematica >= 12.0.0 is required.
+Note that, due to a bug in earlier versions of Mathematica (CASE:4034970), Mathematica >= 12.0.0 is required.
