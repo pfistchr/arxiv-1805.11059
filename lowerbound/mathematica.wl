@@ -10,4 +10,4 @@ verify[alpha_, beta_, qxy_] := Print[-(Log[Norm[Flatten[(pxy ^ alpha) + beta], 1
 Print[Min[pxy] > 0];
 Print[Total[pxy, 2] == 1];
 
-<<"input.wl"
+If[10*29^(7151557967478901/9007199254740992) < 145, <<"input.wl", Print["please use Mathematica >= 12.0.0"]];
